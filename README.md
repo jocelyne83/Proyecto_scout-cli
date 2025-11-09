@@ -1,4 +1,4 @@
-- [Docker Scout](#docker-scout)
+- [Docker_Scout](#docker-scout)
 - [Usage](#usage)
 - [CLI Plugin Installation](#cli-plugin-installation)
 - [Run as container](#run-as-container)
