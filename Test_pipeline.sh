@@ -47,7 +47,7 @@ done
 
 # Resultado final de la validación
 if [[ $errores -eq 0 ]]; then
-  echo "✅ Todas las sintaxis YAML son correctas. No se detectaron errores."
+  echo "Todas las sintaxis YAML son correctas. No se detectaron errores."
 else
   echo "⚠️  Se encontraron $errores archivos con errores de sintaxis YAML."
   echo "   Revisa los mensajes anteriores para más detalles."
