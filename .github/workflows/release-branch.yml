@@ -23,18 +23,34 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PAT }}
 
-      - name: Download docker-scout binary
+      - name: Download docker-scout binary (with fallback)
         run: |
           mkdir -p dist
-          curl -L -o dist/docker-scout.tgz https://github.com/docker/scout-cli/releases/latest/download/docker-scout_$(uname -s)_$(uname -m).tar.gz
-          echo "Contenido descargado:"
-          ls -lh dist/
+          set -e
 
-      - name: Prepare scout binary
-        run: |
-          tar -xf dist/docker-scout.tgz -C .
-          chmod +x docker-scout
+          echo "🔹 Intentando descargar versión .tar.gz..."
+          curl -fL -o dist/docker-scout.tar.gz https://github.com/docker/scout-cli/releases/latest/download/docker-scout_linux_amd64.tar.gz || echo "❌ No se encontró .tar.gz"
+
+          if [ -s dist/docker-scout.tar.gz ]; then
+            echo "✅ Archivo .tar.gz descargado, intentando extraer..."
+            tar -xf dist/docker-scout.tar.gz -C . && chmod +x docker-scout && exit 0
+          else
+            echo "⚠️ Archivo .tar.gz no válido o vacío, probando con .tgz..."
+            curl -fL -o dist/docker-scout.tgz https://github.com/docker/scout-cli/releases/latest/download/docker-scout_linux_amd64.tgz || echo "❌ No se encontró .tgz"
+          fi
+
+          if [ -s dist/docker-scout.tgz ]; then
+            echo "✅ Archivo .tgz descargado, intentando extraer..."
+            tar -xf dist/docker-scout.tgz -C . && chmod +x docker-scout && exit 0
+          else
+            echo "⚠️ .tgz también falló, aplicando plan B (binario directo)..."
+            curl -fL -o docker-scout https://github.com/docker/scout-cli/releases/latest/download/docker-scout_linux_amd64
+            chmod +x docker-scout
+          fi
+
+          echo "✅ Verificando versión descargada..."
           ./docker-scout version
+
 
 
       - name: TEST docker scout version
