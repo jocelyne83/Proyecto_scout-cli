@@ -4,7 +4,7 @@ on:
   push:
     branches:     #Se agrego el push automatico a main 
       - main
-      - 'release/v*'
+      - 'release/*'
       
   pull_request:
     types:
