@@ -4,6 +4,7 @@ on:
   push:
     branches:     #Se agrego el push a main 
       - main
+      - 'release/*'
   pull_request:
     types:
       - opened
