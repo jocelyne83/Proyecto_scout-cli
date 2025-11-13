@@ -49,7 +49,7 @@ jobs:
         run: ./docker-scout compare registry://docker/scout-demo-service:main --to local://docker/scout-demo-service:fix
 
   release:
-    if:  startsWith(github.head_ref, 'release/v')
+    if:  sstartsWith(github.ref_name, 'release/v')
     permissions:
       contents: write
     outputs:
