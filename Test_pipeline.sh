@@ -51,7 +51,7 @@ echo
 
     
 
-# 4️⃣ Prueba funcional simulada del CLI
+# Prueba funcional simulada del CLI
 echo "Simulando ejecución de los comandos definidos..."
 for file in $(find ./docs -name "docker_scout*.yaml"); do
   command=$(yq eval '.command' $file 2>/dev/null)
@@ -64,7 +64,7 @@ done
 echo "Simulación funcional completada."
 echo
 
-#Prueba de integración con Docker Scout (si está disponible)
+#Prueba de integración con Docker Scout 
 if command -v docker >/dev/null 2>&1; then
   echo "Ejecutando prueba real con Docker Scout..."
   docker scout cves alpine:latest >/dev/null 2>&1
