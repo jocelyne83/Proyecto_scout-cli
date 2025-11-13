@@ -1,5 +1,7 @@
 command: docker scout compare
-aliases: docker scout compare, docker scout diff
+aliases:
+- docker scout compare
+- docker scout diff
 short: Compare two images and display differences (experimental)
 long: |-
     The `docker scout compare` command analyzes two images and displays a comparison.
@@ -42,7 +44,7 @@ options:
     - option: exit-code
       shorthand: e
       value_type: bool
-      default_value: "false"
+      default_value: false
       description: Return exit code '2' if vulnerability changes are detected
       deprecated: true
       hidden: true
@@ -77,7 +79,7 @@ options:
       swarm: false
     - option: hide-policies
       value_type: bool
-      default_value: "false"
+      default_value: false
       description: Hide policy status from the output
       deprecated: false
       hidden: false
@@ -87,7 +89,7 @@ options:
       swarm: false
     - option: ignore-base
       value_type: bool
-      default_value: "false"
+      default_value: false
       description: Filter out CVEs introduced from base image
       deprecated: false
       hidden: false
@@ -97,7 +99,7 @@ options:
       swarm: false
     - option: ignore-suppressed
       value_type: bool
-      default_value: "false"
+      default_value: false
       description: |
         Filter CVEs found in Scout exceptions based on the specified exception scope
       deprecated: false
@@ -108,7 +110,7 @@ options:
       swarm: false
     - option: ignore-unchanged
       value_type: bool
-      default_value: "false"
+      default_value: false
       description: Filter out unchanged packages
       deprecated: false
       hidden: false
@@ -118,7 +120,7 @@ options:
       swarm: false
     - option: multi-stage
       value_type: bool
-      default_value: "false"
+      default_value: false
       description: Show packages from multi-stage Docker builds
       deprecated: false
       hidden: false
@@ -128,7 +130,7 @@ options:
       swarm: false
     - option: only-fixed
       value_type: bool
-      default_value: "false"
+      default_value: false
       description: Filter to fixable CVEs
       deprecated: false
       hidden: false
@@ -180,7 +182,7 @@ options:
       swarm: false
     - option: only-unfixed
       value_type: bool
-      default_value: "false"
+      default_value: false
       description: Filter to unfixed CVEs
       deprecated: false
       hidden: false
@@ -190,7 +192,7 @@ options:
       swarm: false
     - option: only-vex-affected
       value_type: bool
-      default_value: "false"
+      default_value: false
       description: Filter CVEs by VEX statements with status not affected
       deprecated: false
       hidden: false
@@ -257,7 +259,7 @@ options:
       swarm: false
     - option: to-latest
       value_type: bool
-      default_value: "false"
+      default_value: false
       description: Latest image processed to compare to
       deprecated: false
       hidden: false
@@ -287,7 +289,7 @@ options:
       swarm: false
     - option: vex
       value_type: bool
-      default_value: "false"
+      default_value: false
       description: Apply VEX statements to filter CVEs
       deprecated: true
       hidden: true
@@ -318,7 +320,7 @@ options:
 inherited_options:
     - option: debug
       value_type: bool
-      default_value: "false"
+      default_value: false
       description: Debug messages
       deprecated: false
       hidden: true
@@ -328,7 +330,7 @@ inherited_options:
       swarm: false
     - option: verbose-debug
       value_type: bool
-      default_value: "false"
+      default_value: false
       description: Verbose debug
       deprecated: false
       hidden: true
