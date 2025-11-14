@@ -10,7 +10,7 @@ on:
       - opened
       - reopened
       - synchronize
-  workflow_dispatch:  # este permite correr el workflow automaticamente
+  workflow_dispatch:  
 
 jobs:
   test:
