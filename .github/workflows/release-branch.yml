@@ -2,10 +2,9 @@ name: Test and Release
 
 on:
   push:
-    branches:     #Se agrego el push automatico a main 
+    branches:     #Se agrego el push a main 
       - main
       - 'release/*'
-      
   pull_request:
     types:
       - opened
