@@ -5,7 +5,6 @@ RUN apk add --no-cache bash curl tar
 
 WORKDIR /app
 
-# Copiar todo el proyecto al contenedor
 COPY . .
 
 # Dar permisos de ejecución al script principal
