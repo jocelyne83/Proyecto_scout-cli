@@ -17,7 +17,7 @@ command -v docker >/dev/null 2>&1 || { echo "⚠️  Docker no está instalado o
 echo "Herramientas detectadas correctamente."
 echo
 
-#VALIDACIÓN DE SINTAXIS YAML 
+#VALIDACIÓN 
 echo "----------------------------------------------------------"
 echo "Revisando sintaxis YAML en la carpeta ./docs..."
 echo
