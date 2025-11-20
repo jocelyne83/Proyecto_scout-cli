@@ -65,7 +65,7 @@ jobs:
         uses: mad9000/actions-find-and-replace-string@2
         id: tagname
         with:
-          source: ${{ github.head_ref }}
+          source: ${{ github.ref_name }}
           find: 'release/'
           replace: ''
       - name: Merge and Tag
