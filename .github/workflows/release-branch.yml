@@ -89,8 +89,14 @@ jobs:
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --global user.name "${GITHUB_ACTOR}"
           git merge --ff-only origin/${{ github.ref_name }}
-          git tag ${{ steps.tagname.outputs.value }}
-          git push https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main --tags
+
+          # Verificar si el tag ya existe
+          if git rev-parse "${{ steps.tagname.outputs.value }}" >/dev/null 2>&1; then
+            echo "El tag ${{ steps.tagname.outputs.value }} ya existe. No se creará nuevamente."
+          else
+            git tag ${{ steps.tagname.outputs.value }}
+            git push https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main --tags
+          fi
 
       - name: Docker Login
         uses: docker/login-action@v2
