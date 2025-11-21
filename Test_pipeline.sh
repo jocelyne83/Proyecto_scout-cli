@@ -2,7 +2,7 @@
 # ==========================================================
 # 🧪 Script de pruebas continuas - Proyecto scout-cli
 # ==========================================================
-# Autor: Abiga Vega Talledos
+# Autor: Abiga Vega 
 # ==========================================================
 
 echo "Iniciando pruebas continuas del proyecto scout-cli..."
