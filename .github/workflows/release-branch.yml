@@ -5,6 +5,8 @@ on:
     branches:     #Se agrego el push a main 
       - main
       - 'release/*'
+    tags:
+      - 'v*'
   pull_request:
     types:
       - opened
@@ -52,36 +54,34 @@ jobs:
     if:  startsWith(github.ref_name, 'release/v')
     permissions:
       contents: write
-    outputs:
-      tag: ${{ steps.tagname.outputs.value }}
     runs-on: ubuntu-latest
-    needs: test
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: tag from branch name
+
+      # ==========================================================
+      # 🔥 GENERAR TAG AUTOMÁTICO → v1.0.X (incremento de patch)
+      # ==========================================================
+      - name: Generate next version tag
         id: tagname
         run: |
-          # Obtener nombre de la rama: release/v1.0.0
-          BRANCH="${{ github.ref_name }}"
-          
-          # Quitar "release/"
-          BASE_TAG="${BRANCH#release/}"
+          # Obtener el último tag. Si no existe, comenzar en v1.0.0
+          last_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v1.0.0")
+          echo "Último tag encontrado: $last_tag"
 
-          # Separar los números
-          IFS='.' read -r MAJOR MINOR PATCH <<< "${BASE_TAG#v}"
+          version="${last_tag#v}"
+          IFS='.' read -r major minor patch <<< "$version"
 
-          # Incrementar PATCH (+1)
-          NEXT_PATCH=$((PATCH + 1))
+          # Incrementar el patch
+          patch=$((patch + 1))
+          new_tag="v${major}.${minor}.${patch}"
+          echo "Nuevo tag generado: $new_tag"
 
-          # Formar el nuevo tag
-          NEXT_TAG="v${MAJOR}.${MINOR}.${NEXT_PATCH}"
+          echo "value=$new_tag" >> $GITHUB_OUTPUT
 
-          echo "value=$NEXT_TAG" >> $GITHUB_OUTPUT
-
-          echo "Generando tag: $NEXT_TAG"
+      # ==========================================================
 
       - name: Merge and Tag
         run: |
@@ -103,6 +103,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PAT }}
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -111,9 +112,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USER }}/scout-service:${{ steps.tagname.outputs.value }}
-
-
+          tags: ${{ secrets.DOCKER_USER }}/explorador_cli:${{ steps.tagname.outputs.value }}
 
   create_release:
     needs:
